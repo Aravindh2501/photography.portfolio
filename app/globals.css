@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #040404;
+  --color-gold: #c9a84c;
+  --color-gold-light: #f0d080;
+  --color-gold-dim: #a8893a;
+  --color-surface: rgba(255, 255, 255, 0.04);
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-text: #e8e8e8;
+  --color-muted: rgba(255, 255, 255, 0.45);
+
+  --font-display: "Playfair Display", serif;
+  --font-body: "Outfit", sans-serif;
+
+  --radius-card: 12px;
+  --blur-glass: 16px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  background: #040404;
+  color: #e8e8e8;
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  background: #040404;
+  min-height: 100vh;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* Film grain overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.035;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 128px 128px;
+  animation: grain 0.4s steps(1) infinite;
+}
+
+@keyframes grain {
+  0%, 100% { transform: translate(0, 0); }
+  10% { transform: translate(-2%, -3%); }
+  20% { transform: translate(3%, 1%); }
+  30% { transform: translate(-1%, 4%); }
+  40% { transform: translate(2%, -2%); }
+  50% { transform: translate(-3%, 2%); }
+  60% { transform: translate(1%, -4%); }
+  70% { transform: translate(-2%, 3%); }
+  80% { transform: translate(3%, -1%); }
+  90% { transform: translate(-1%, 2%); }
+}
+
+/* Gold gradient text */
+.text-gold-gradient {
+  background: linear-gradient(135deg, #c9a84c 0%, #f0d080 40%, #c9a84c 70%, #a8893a 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+
+/* Scroll reveal */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(44px);
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-reveal].revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+::-webkit-scrollbar-track {
+  background: #040404;
+}
+::-webkit-scrollbar-thumb {
+  background: #c9a84c33;
+  border-radius: 2px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #c9a84c66;
+}
+
+/* Cinematic page transition */
+.page-enter {
+  opacity: 0;
+  transform: scale(0.96);
+}
+
+.page-enter-active {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Gold glow */
+.gold-glow {
+  box-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+}
+
+/* Film perforation */
+.film-perf {
+  background: repeating-linear-gradient(
+    to bottom,
+    transparent 0px,
+    transparent 14px,
+    #c9a84c22 14px,
+    #c9a84c22 16px,
+    transparent 16px,
+    transparent 30px
+  );
+}
+
+/* Lenis smooth scroll */
+html.lenis {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* Loader */
+#madshot-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100000;
+  background: #040404;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Selection */
+::selection {
+  background: rgba(201, 168, 76, 0.25);
+  color: #f0d080;
+}
+
+/* Restore default cursor on touch devices */
+@media (hover: none) {
+  body {
+    cursor: auto;
+  }
+  a, button {
+    cursor: pointer;
+  }
+}
+
+/* Responsive padding */
+@media (max-width: 640px) {
+  [data-reveal] {
+    transform: translateY(28px);
+  }
+}
