@@ -20,6 +20,10 @@ const nextConfig = {
   typescript: {
     ignoreBuildErrors: true,
   },
+
+  experimental: {
+    optimizePackageImports: ["gsap"],
+  },
 };
 
 export default nextConfig;
